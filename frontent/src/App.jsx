@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TaskList from "./components/TaskList";
 import axios from "axios";
-import { fetchTasks, toggleTaskStatus } from "./utils";
+import api, { fetchTasks, toggleTaskStatus } from "./utils";
 
 const App = () => {
   const [editId, setEditId] = useState(null);
@@ -32,13 +32,13 @@ const App = () => {
     e.preventDefault();
     try {
       if (editId) {
-        await axios.put(`http://localhost:4000/api/tasks/${editId}`, {
+        await api.put(`/tasks/${editId}`, {
           title,
           description,
         });
       } else {
         if (title.trim() !== "") {
-          await axios.post("http://localhost:4000/api/tasks", {
+          await api.post("/tasks", {
             title,
             description,
           });
@@ -62,7 +62,7 @@ const App = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
       try {
-        await axios.delete(`http://localhost:4000/api/tasks/${id}`);
+        await api.delete(`/tasks/${id}`);
         loadTasks();
       } catch (error) {
         console.error("Error deleting task:", error);
