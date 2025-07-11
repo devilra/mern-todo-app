@@ -7,7 +7,7 @@ const taskRoutes = require("./routes/todoRoute");
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5174/",
+    origin: "*",
   })
 );
 app.use(express.json());
